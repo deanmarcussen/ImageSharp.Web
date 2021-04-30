@@ -40,6 +40,7 @@ namespace SixLabors.ImageSharp.Web.Sample
         /// <param name="services">The collection of service desscriptors.</param>
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddRazorPages();
             services.AddImageSharp()
                 .SetRequestParser<QueryCollectionRequestParser>()
                 .Configure<PhysicalFileSystemCacheOptions>(options =>
@@ -151,6 +152,11 @@ namespace SixLabors.ImageSharp.Web.Sample
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseRouting();
+            app.UseEndpoints(e => {
+                e.MapRazorPages();
+                e.MapControllers();
+            });
             app.UseDefaultFiles();
             app.UseImageSharp();
             app.UseStaticFiles();
